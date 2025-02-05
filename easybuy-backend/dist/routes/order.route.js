@@ -1,0 +1,13 @@
+import express from "express";
+import { allOrders, deleteOrder, getSingleOrder, myOrders, newOrder, processOrder, } from "../controllers/order.js";
+import { isAdmin } from "../middlewares/auth.js";
+const router = express.Router();
+router.post("/new", newOrder);
+router.get("/my", myOrders);
+router.get("/all", isAdmin, allOrders);
+router
+    .route("/:id")
+    .get(getSingleOrder)
+    .put(isAdmin, processOrder)
+    .delete(isAdmin, deleteOrder);
+export default router;
